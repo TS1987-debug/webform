@@ -1,40 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="images/red-super-sports-car.png">
-  <title>Car Dealership Inquiry Form</title>
+  <title>Car Dealership Inquiry + Chatbot</title>
   <style>
     body {
       background: linear-gradient(to right, #f0f0f0, #ffffff);
       font-family: 'Segoe UI', sans-serif;
-      padding: 30px;
       margin: 0;
-      display: flex;
-      justify-content: center;
+      padding: 20px;
     }
 
-    #loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: transparent;
-      backdrop-filter: none;
-      display: none;
+    .container {
+      display: flex;
       justify-content: center;
-      align-items: center;
-      z-index: 9999;
+      align-items: flex-start;
+      gap: 40px;
     }
 
     .form-container {
-      display: none;
       background-color: #ffffff;
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      padding: 40px;
+      padding: 30px;
       max-width: 700px;
       width: 100%;
     }
@@ -42,286 +30,105 @@
     h1 {
       text-align: center;
       color: #00457a;
-      margin-bottom: -5px;
-    }
-
-    p.description {
-      text-align: center;
-      color: #555;
-      font-size: 15px;
       margin-bottom: 10px;
     }
 
-    p.required-note {
-      text-align: left;
-      color: #d10000;
-      font-size: 13px;
-      margin-bottom: 30px;
-    }
-
     label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #333;
+      font-weight: bold;
     }
 
-    .required-asterisk {
-      color: red;
-      margin-left: 4px;
-    }
-
-    input, textarea {
-      width: 96%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-
-    select {
+    input, select, textarea {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
+      padding: 10px;
+      margin: 10px 0 20px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 14px;
-      color: #d1d0d0;
-    }
-
-    select.filled {
-      color: #000;
-    }
-
-    select:focus {
-      color: #000;
     }
 
     input[type="submit"] {
-      background-color: #0072ff !important;
-      color: white !important;
-      font-size: 16px;
+      background-color: #0072ff;
+      color: white;
       font-weight: bold;
-      border: none;
-      transition: background 0.3s ease;
-      border-radius: 8px;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #0058cc !important;
       cursor: pointer;
     }
 
-    input {
-      background-color: white !important;
-      color: black !important;
-    }
-
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-internal-autofill-selected {
-      -webkit-box-shadow: 0 0 0 1000px white inset !important;
-      -webkit-text-fill-color: black !important;
-      background-color: white !important;
-      transition: background-color 5000s ease-in-out 0s;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #d1d0d0;
-      opacity: 1;
-    }
-
-    input[type="date"] {
-      color: #888;
-    }
-
-    input[type="date"].filled {
-      color: #000;
-    }
-
-    input[type="date"]:focus {
-      color: #000;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- 🔄 Loading Screen -->
-  <div id="loading-screen">
-    <img src="images/loading-loader.gif" alt="Loading..." />
-  </div>
-
-  <!-- 📝 Main Form -->
-  <div class="form-container">
-    <div style="text-align:center; margin-bottom: 20px;">
-      <img src="images/Bicsglobal_Logo_v1.png" alt="Bics Logo" height="100">
-    </div>
-
-    <h1>
-      <img src="images/red-super-sports-car.png" alt="Car Icon" height="57" style="vertical-align: middle; padding-bottom: 8px;">
-      Car Dealership Inquiry Form
-    </h1>
-
-    <p class="description">Please fill out this form to get a personalized quote for your preferred car.</p>
-
-    <form 
-      action="https://hooks.zapier.com/hooks/catch/23731183/uu3uozs/"
-      method="POST" 
-      target="hidden_iframe" 
-      onsubmit="return handleSubmit();"
-    >
-      <label for="first_name">First Name<span class="required-asterisk">*</span></label>
-      <input type="text" name="first_name" id="first_name" required placeholder="Enter your first name">
-
-      <label for="last_name">Last Name</label>
-      <input type="text" name="last_name" id="last_name" placeholder="Enter your last name">
-
-      <label for="email">Email Address<span class="required-asterisk">*</span></label>
-      <input type="email" name="email" id="email" required placeholder="Enter your email id">
-
-      <label for="phone">Phone Number</label>
-      <input type="text" name="phone" id="phone" placeholder="Enter your phone number">
-
-      <label for="car_model">Preferred Car Model<span class="required-asterisk">*</span></label>
-      <select name="car_model" id="car_model" required>
-        <option value="">-- Select --</option>
-        <option value="Tesla Model 3">Tesla Model 3</option>
-        <option value="BMW X5">BMW X5</option>
-        <option value="Audi Q5">Audi Q5</option>
-        <option value="Mercedes C-Class">Mercedes C-Class</option>
-        <option value="Hyundai Ioniq 5">Hyundai Ioniq 5</option>
-      </select>
-
-      <label for="budget_range">Budget Range</label>
-      <select name="budget_range" id="budget_range">
-        <option value="">-- Select --</option>
-        <option value="$20,000 – $30,000">$20,000 – $30,000</option>
-        <option value="$30,000 – $40,000">$30,000 – $40,000</option>
-        <option value="$40,000 – $50,000">$40,000 – $50,000</option>
-        <option value="$50,000+">$50,000+</option>
-      </select>
-
-      <label for="lease_company">Lease Company<span class="required-asterisk">*</span></label>
-      <select name="lease_company" id="lease_company" required>
-        <option value="">-- Select --</option>
-        <option value="CompanyA">CompanyA</option>
-        <option value="CompanyB">CompanyB</option>
-        <option value="CompanyC">CompanyC</option>
-      </select>
-
-      <label for="contact_method">Preferred Contact Method</label>
-      <select name="contact_method" id="contact_method">
-        <option value="">-- Select --</option>
-        <option value="Phone">Phone</option>
-        <option value="Email">Email</option>
-        <option value="WhatsApp">WhatsApp</option>
-        <option value="Teams">Teams</option>
-      </select>
-
-      <label for="lease_from_date">Lease Duration From<span class="required-asterisk">*</span></label>
-      <input type="date" name="lease_from_date" id="lease_from_date" required>
-
-      <label for="lease_to_date">Lease Duration To<span class="required-asterisk">*</span></label>
-      <input type="date" name="lease_to_date" id="lease_to_date" required>
-
-      <label for="lease_days">Number of Total Lease Days</label>
-      <input type="text" id="lease_days" name="lease_days" readonly placeholder="Auto-calculated">
-
-      <label for="notes">Additional Message / Notes</label>
-      <textarea name="notes" id="notes" rows="4" placeholder="Example: Looking for a white Tesla with autopilot."></textarea>
-
-      <p class="required-note">Please fill out all mandatory fields (*)</p>
-      <input type="submit" value="Send Inquiry">
-    </form>
-
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
-  </div>
-
-  <script>
-    function handleSubmit() {
-      const email = document.getElementById("email").value;
-
-      document.getElementById("loading-screen").style.display = "flex";
-      document.querySelector(".form-container").style.display = "none";
-
-      setTimeout(() => {
-        window.location.href = `thank-you-page.html?email=${encodeURIComponent(email)}`;
-      }, 1500);
-
-      return true;
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("lease_from_date").setAttribute("min", today);
-      document.getElementById("lease_to_date").setAttribute("min", today);
-
-      document.getElementById("loading-screen").style.display = "none";
-      document.querySelector(".form-container").style.display = "block";
-    });
-
-    document.querySelectorAll('select').forEach(function(select) {
-      if (select.value) select.classList.add('filled');
-      select.addEventListener('change', function () {
-        if (this.value) {
-          this.classList.add('filled');
-        } else {
-          this.classList.remove('filled');
-        }
-      });
-    });
-
-    const fromDate = document.getElementById("lease_from_date");
-    const toDate = document.getElementById("lease_to_date");
-    const leaseDays = document.getElementById("lease_days");
-
-    function calculateLeaseDays() {
-      if (fromDate.value && toDate.value) {
-        const from = new Date(fromDate.value);
-        const to = new Date(toDate.value);
-
-        if (to < from) {
-          alert("Lease Duration To cannot be earlier than From date.");
-          toDate.value = "";
-          leaseDays.value = "";
-          return;
-        }
-
-        const timeDiff = to - from;
-        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
-        leaseDays.value = `${daysDiff} day${daysDiff > 1 ? 's' : ''}`;
-      }
-    }
-
-    fromDate.addEventListener("change", calculateLeaseDays);
-    toDate.addEventListener("change", calculateLeaseDays);
-  </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AI Chatbot</title>
-  <style>
-    #chatbox {
+    /* Chatbot Styles */
+    .chatbot-container {
       width: 300px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 15px;
+    }
+
+    #chatbox {
+      width: 100%;
       height: 400px;
       border: 1px solid #ccc;
       padding: 10px;
       overflow-y: scroll;
+      margin-bottom: 10px;
     }
-    input, button { width: 80%; margin-top: 10px; }
+
+    #userInput {
+      width: calc(100% - 20px);
+      padding: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #0072ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0058cc;
+    }
   </style>
 </head>
 <body>
-  <h3>Chat with AI</h3>
-  <div id="chatbox"></div>
-  <input id="userInput" placeholder="Type your message..." />
-  <button onclick="sendMessage()">Send</button>
+
+  <div class="container">
+    <!-- 📝 Form Section -->
+    <div class="form-container">
+      <h1>Car Dealership Inquiry Form</h1>
+      <form action="https://hooks.zapier.com/hooks/catch/23731183/uu3uozs/" method="POST">
+        <label>First Name*</label>
+        <input type="text" name="first_name" required>
+
+        <label>Last Name</label>
+        <input type="text" name="last_name">
+
+        <label>Email*</label>
+        <input type="email" name="email" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone">
+
+        <label>Preferred Car Model*</label>
+        <select name="car_model" required>
+          <option value="">-- Select --</option>
+          <option value="Tesla Model 3">Tesla Model 3</option>
+          <option value="BMW X5">BMW X5</option>
+          <option value="Audi Q5">Audi Q5</option>
+        </select>
+
+        <input type="submit" value="Submit Inquiry">
+      </form>
+    </div>
+
+    <!-- 🤖 Chatbot Section -->
+    <div class="chatbot-container">
+      <h3>Chat with AI</h3>
+      <div id="chatbox"></div>
+      <input id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
   <script>
     async function sendMessage() {
@@ -338,10 +145,9 @@
       });
 
       const data = await response.json();
-      chatbox.innerHTML += `<div><b>AI:</b> ${data.reply}</div>`;
+      chatbox.innerHTML += `<div><b>AI:</b> ${data.reply || "Response coming soon..."}</div>`;
       document.getElementById('userInput').value = "";
     }
   </script>
 </body>
 </html>
-
