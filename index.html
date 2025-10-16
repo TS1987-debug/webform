@@ -1,7 +1,7 @@
 <!--
 Simple Chatbot HTML (single-file)
-Integrated with Zapier Webhook
-Webhook URL: https://hooks.zapier.com/hooks/catch/24917788/u537s8d/
+Integrated with local Node.js Proxy for Zapier
+Proxy URL: http://localhost:3000/chat
 -->
 
 <!doctype html>
@@ -9,7 +9,7 @@ Webhook URL: https://hooks.zapier.com/hooks/catch/24917788/u537s8d/
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Simple Chatbot</title>
+  <title>Chatbot with Proxy</title>
   <style>
     :root{
       --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --user:#0ea5a4; --bot:#1f2937;
@@ -61,8 +61,8 @@ Webhook URL: https://hooks.zapier.com/hooks/catch/24917788/u537s8d/
       <header>
         <div class="avatar">CB</div>
         <div>
-          <h1>Zapier Integrated Chatbot</h1>
-          <p>Messages will be sent to your Zapier Webhook and reply displayed here.</p>
+          <h1>Chatbot via Proxy</h1>
+          <p>Messages are sent to your local Node.js proxy which forwards to Zapier.</p>
         </div>
       </header>
 
@@ -115,30 +115,27 @@ Webhook URL: https://hooks.zapier.com/hooks/catch/24917788/u537s8d/
 
     function setStatus(text){ statusEl.textContent = text; }
 
-    // Send user message to Zapier webhook
     async function sendToServer(message){
       try {
-        const resp = await fetch('https://hooks.zapier.com/hooks/catch/24917788/u537s8d/', {
+        const resp = await fetch('http://localhost:3000/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message })
         });
 
-        // Try to parse JSON or fallback to plain text
         const text = await resp.text();
         try {
           const data = JSON.parse(text);
-          return data.reply || JSON.stringify(data) || '✅ Message sent!';
-        } catch(e){
-          return text || '✅ Message sent to Zapier!';
+          return data.reply || JSON.stringify(data) || '✅ Message sent via proxy!';
+        } catch {
+          return text || '✅ Message sent via proxy!';
         }
-      } catch(err) {
+      } catch (err) {
         console.error(err);
-        return '❌ Error sending message to Zapier. Check console for details.';
+        return '❌ Error sending message via proxy. Check server log.';
       }
     }
 
-    // Message sending flow
     let sending = false;
     async function sendMessage(){
       const text = inputEl.value.trim();
@@ -182,7 +179,7 @@ Webhook URL: https://hooks.zapier.com/hooks/catch/24917788/u537s8d/
       inputEl.focus();
     });
 
-    appendMessage('bot', 'Hello! I\'m connected to your Zapier webhook. Type a message to test.');
+    appendMessage('bot', 'Hello! I\'m connected via your local proxy. Type a message to test.');
     inputEl.focus();
   </script>
 </body>
